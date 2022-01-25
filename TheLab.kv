@@ -1,0 +1,182 @@
+WidgetsExample:
+
+#: set s dp(150)
+<CanvasExample1>:
+    canvas:
+        Rectangle:
+            pos: self.center_x-s/2, self.center_y-s/2
+            size: s,s
+        Ellipse:
+            pos: 200,500
+            size: s, s/2
+        Line: 
+            # points : (x,y,x2,y2)
+            points: (0,0,self.width/4,100,self.width/2,0,self.width*3/4,100,self.width,0)
+            width: 2
+
+
+
+<ImagesExample@GridLayout>:
+    cols:3
+    Image:
+        source: "images/cake.jpg"
+    Image:
+        source: "images/cake.jpg"
+        allow_stretch: True
+    Image:
+        source: "images/cake.jpg"
+        allow_stretch: True
+        keep_ratio: False
+
+
+<WidgetsExample@GridLayout>:
+    cols: 3
+    ToggleButton:
+        text: 'OFF'
+        on_state: root.on_toggle_button_state(self)
+        size_hint: None,1
+        width: "100dp"
+    Button:
+        text: "Click Here"
+        on_press: root.on_button_click()
+        disabled: not root.count_enabled
+    Label:
+        text: root.my_text
+        font_name: "fonts/Lcd.ttf"
+        font_size: "80dp"
+        color: 1,0.5,1,1
+    Switch:
+        id: my_switch
+        # on_active: root.on_switch_active(self)
+        active: True
+        size_hint: None,1
+        width: "100dp"
+    Slider:
+        id: my_slider
+        min: 0
+        max: 100
+        value: 50
+        # on_value: root.on_slider_value(self)
+        orientation: 'vertical'
+        # disabled: False if my_switch.active else True
+        disabled: not my_switch.active
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: str(int(my_slider.value))
+            font_size:"30dp"
+        ProgressBar:
+            max:100
+            value:my_slider.value
+    TextInput:
+        id:my_text_input
+        text: 'Before Validation'
+        size_hint: None,1
+        width: "100dp"
+        multiline: False
+        on_text_validate: root.on_text_validate(self) # sends text info to widget.text
+    Label: 
+        text: "Your Name Is " + root.text_input_str
+
+<PageLayoutExample@PageLayout>:
+    MainWidget:
+    BoxLayoutExample:
+    AnchorLayoutExample:
+        
+
+<ScrollViewExample@ScrollView>:
+# only takes one child
+    StackLayoutExample:
+        size_hint:1,None
+        height: self.minimum_height
+
+<StackLayoutExample>:
+    # left-right, top-bottom
+    # orientation: 'lr-tb'
+    # padding:(left, top,right,bottom)
+    # padding:("200dp", "100dp","20dp","20dp" )
+    # spacing: horizontal, vertical
+    spacing: "20dp", "20dp"
+
+<GridLayoutExample@GridLayout>:
+    # rows
+    # cols
+    cols: 3
+    rows: 2
+    Button:
+        text: "A"
+        size_hint: None,.1
+        width: "60dp"
+    BoxLayoutExample:
+        
+    Button:
+        text: "C"
+    Button:
+        text: "D"  
+        size_hint: None,.1  
+        width: "60dp"
+    Button:
+        text: "E"
+    Button:
+        text: "F"   
+
+<AnchorLayoutExample>:
+    # right, left, center
+    anchor_x:"center"
+    # bottom, top, center
+    anchor_y:"top"
+    BoxLayout:
+        size_hint: .2,.2
+        Button:
+            text: "A"
+            size_hint: 1,1
+        Button:
+            text: "B"
+            size_hint: 1,1
+
+<BoxLayoutExample>:
+    # orientation: "vertical"
+    Button:
+        text:'A'
+        # size: "100dp", "100dp"
+        size_hint: .5,.5
+        # width: "100dp"
+        # height: "60dp"
+        # x, center_x, right
+        # y, center_y, top
+        # pos_hint: {"center_x": .35}
+        pos_hint: {"top":1}
+
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: "10dp"
+        Button:
+            text:'B1'
+        Button:
+            text:'B2'
+        Button:
+            text:'B3'
+        Button:
+            text:'B4'    
+
+    Label:
+        text:'C'
+
+<MainWidget>:
+    Button:
+        text: 'Hello!'
+        size: "188dp", "89dp"
+        pos: "188dp", "288dp"
+        color: 0,0,1,1
+
+    Label:
+        text: "Goodbye!"
+        size: "100dp", "100dp"
+        pos: "100dp", "100dp"
+        color: 0,1,1,1
+
+    Button:
+        text: "Try again!"
+        size: "100dp", "100dp"
+        pos: "3dp", "3dp"
+        color: 1,1,1,1  
