@@ -1,94 +1,140 @@
-WidgetsExample:
+# this code determines what page will be shown in Kivy App
+CanvasExample4:
 
-#: set s dp(150)
+#: set s dp(150) # can set a variable before a class is made so it can be easily called
 <CanvasExample1>:
     canvas:
         Rectangle:
-            pos: self.center_x-s/2, self.center_y-s/2
-            size: s,s
+            pos: self.center_x-s/2, self.center_y-s/2 # rectangle will always be center of window
+            size: s,s # makes rectangle a square
         Ellipse:
             pos: 200,500
-            size: s, s/2
-        Line: 
+            size: s, s/2 # x_radius, y_radius
+        Line:
             # points : (x,y,x2,y2)
-            points: (0,0,self.width/4,100,self.width/2,0,self.width*3/4,100,self.width,0)
+            points: (0,0,self.width/4,100,self.width/2,0,self.width*3/4,100,self.width,0) # creates a
+            # wave line that moves with the window because it uses the width of the window
+            width: 2 # width of the line
+
+<CanvasExample2>:
+    canvas:
+        Line:
+            points: (0,self.height/2,self.width, self.height/2) # coordinates like ((x0,y0),(x1,y1),(x2,y2))
+            width: 2 # width of the line stroke
+        Line:
+            points: (self.width/2, 0, self.width/2, self.height) # coordinates like ((x0,y0),(x1,y1),(x2,y2))
+            width: 2 # width of the line stroke
+
+<CanvasExample3>:
+    # creates a canvas that can use color and lines
+    canvas:
+        Color: # for each shape after, the color will be this rgb
+            rgb: 1,0,0 # red green blue
+        Line:
+            circle: (200,200,100) # center_x, center_y, radius
+            width: 2
+        Line:
+            ellipse: (500,300,200,300) # center_x, center_y, radius_x, radius_y
+            width: 4
+        Color: # this one overrides previous Color parameter
+            rgba: 0, 0, 1, .8 # (red, green, blue, alpha(transparency))
+        Line:
+            rectangle: (800, 100, 500, 200) # x, y, w, h
             width: 2
 
+<CanvasExample4>:
+    Button: # creates a button widget that can be clicked
+        pos: 100, 400 # postion of button
+        text: "A" # text that is dipslayed on the button
+        on_press: root.on_button_a_click() # if button is pressed, on_buton_a_click() is called,
+        # which will probably change another variable
 
 
 <ImagesExample@GridLayout>:
     cols:3
-    Image:
-        source: "images/cake.jpg"
-    Image:
-        source: "images/cake.jpg"
-        allow_stretch: True
+    Image: # creates a source widet
+        source: "images/cake.jpg" # call an image using source
     Image:
         source: "images/cake.jpg"
         allow_stretch: True
-        keep_ratio: False
+    Image:
+        source: "images/cake.jpg"
+        allow_stretch: True # photo will stretch as the window stretches
+        keep_ratio: False # photo will be distorted, but it will fill all availible space
 
-
+# Create a widgets exmaple that uses a grid layout to display widgets
 <WidgetsExample@GridLayout>:
+    # 3 columns across grid, so after 3, next widget will go to next line
     cols: 3
-    ToggleButton:
-        text: 'OFF'
-        on_state: root.on_toggle_button_state(self)
-        size_hint: None,1
-        width: "100dp"
-    Button:
-        text: "Click Here"
-        on_press: root.on_button_click()
-        disabled: not root.count_enabled
-    Label:
-        text: root.my_text
-        font_name: "fonts/Lcd.ttf"
-        font_size: "80dp"
-        color: 1,0.5,1,1
-    Switch:
-        id: my_switch
-        # on_active: root.on_switch_active(self)
-        active: True
-        size_hint: None,1
-        width: "100dp"
-    Slider:
-        id: my_slider
-        min: 0
-        max: 100
-        value: 50
-        # on_value: root.on_slider_value(self)
-        orientation: 'vertical'
+    ToggleButton: # Creates a ToggleButton widget
+        text: 'OFF' # displays OFF on the toggle button to begin
+        on_state: root.on_toggle_button_state(self) # on_state refers to if button is on or off,
+        # uses on_toggle_button_state class to determine if on or off
+        size_hint: None,1 # size_hint is in relation to the grid layout, how big will it's box size be?
+        width: "100dp" # 100dp uses a universal unit to create the same width on every computer
+    Button: # creates a button widget
+        text: "Click Here" # text diplayed oto the button
+        on_press: root.on_button_click() # if button is pressed, on_button_click() is called and
+        # that class will increment the count
+        disabled: not root.count_enabled # if count_enabled is turned off, this button is turned off as
+        # well. count_enabled not a class so it doesn't require paranthesis
+    Label: # creates a label widget
+        text: root.my_text # uses text from my_text class attribute of WidgetsExample(), it's set to
+        # equal count of class
+        font_name: "fonts/Lcd.ttf" # called a font from fonts dir to be used by text
+        font_size: "80dp" # increases that size of the text to 80dp
+        color: 1,0.5,1,.2 # rgba(red, green, blue, alpha(transparency))
+    Switch: # creates a switch widget
+        id: my_switch # id is powerful for calling this function/widget from other classes
+        on_active: root.on_switch_active(self) # when this swtich is active, it will call on_switch_active()
+        # and on_switch_active will do what needs to be done
+        active: True # When app is first ran, this is the state of the switch
+        size_hint: None,1 # size of widget matches the size of the ToggleButton for a good looking grid
+        width: "100dp" # 'read comment above'
+    Slider: # creates a Slider Widget
+        id: my_slider # names the id of this slider to my_slider
+        min: 0 # minimum number that the slider will go to
+        max: 100 # maximum number that the slider will go to
+        value: 50 # starting value that slider will begin at
+        on_value: root.on_slider_value(self) # at an intance, the value of the slider will be used by
+        #  on_slider_value(self)
+        orientation: 'vertical' # slider will move up and down and not horizontally
         # disabled: False if my_switch.active else True
-        disabled: not my_switch.active
-    BoxLayout:
-        orientation: 'vertical'
-        Label:
-            text: str(int(my_slider.value))
-            font_size:"30dp"
-        ProgressBar:
-            max:100
-            value:my_slider.value
-    TextInput:
-        id:my_text_input
-        text: 'Before Validation'
-        size_hint: None,1
-        width: "100dp"
-        multiline: False
-        on_text_validate: root.on_text_validate(self) # sends text info to widget.text
-    Label: 
-        text: "Your Name Is " + root.text_input_str
+        disabled: not my_switch.active # if my_switch is active, then disabled is False
+    BoxLayout: # creates a box layout that allows text to be written on it
+        orientation: 'vertical' # the widgets beneath above and below of each other
+        Label: # creates a label widget within BoxLayout
+            text: str(int(my_slider.value)) # displays the value of my_slider
+            font_size:"30dp" # displays the text with 30dp font size
+        ProgressBar: # creates a progress bar within BoxLayout, beneath label
+            max:100 # the bar will go to 100 and start from 0
+            value:my_slider.value # the value of this bar is equal to my_slider.value(value of my_slider)
+    TextInput: # creates a textinput widget where user can input text
+        id:my_text_input # id is set to my_text_input
+        text: 'Before Validation' # initial text that is displayed onto the textinput widget
+        size_hint: None,1 # in the first column, so to keep it looking pretty, size must match the first
+        # two rows of column 1
+        width: "100dp" # same as above comment
+        multiline: False # setting 'multiline' to False means that on enter, the textinput can output a task
+        on_text_validate: root.on_text_validate(self) # when 'Enter' key is pressed, this will call
+        #  on_text_validate(self) to complete an argument
+    Label: # creates a label widget that outputs what is written within id:my_text_input
+        text: "Your Name Is " + root.text_input_str # calls text_input_str to obtain the text that is
+        #  outputted onto string
 
+# PageLayoutExample is created using PageLayout, which displays several pages in one window,
+#  they can be scrolled left to right
 <PageLayoutExample@PageLayout>:
     MainWidget:
     BoxLayoutExample:
     AnchorLayoutExample:
-        
 
+# creates a window that displays ScrollView , allows for the window to be scrolled vertically
 <ScrollViewExample@ScrollView>:
-# only takes one child
-    StackLayoutExample:
-        size_hint:1,None
-        height: self.minimum_height
+# ScrollView only takes one child
+    StackLayoutExample: # calls the StackLayoutExample to demonstrate scroll view on a big window
+        size_hint:1,None # in size_hint, width is 100% and the height is constaint to none
+        height: self.minimum_height # height of the window is set to minimum_height of StackLayoutExample
 
 <StackLayoutExample>:
     # left-right, top-bottom
@@ -96,43 +142,44 @@ WidgetsExample:
     # padding:(left, top,right,bottom)
     # padding:("200dp", "100dp","20dp","20dp" )
     # spacing: horizontal, vertical
-    spacing: "20dp", "20dp"
+    spacing: "20dp", "20dp" # spacing between each stack
 
 <GridLayoutExample@GridLayout>:
     # rows
-    # cols
+    # cols = columns
     cols: 3
     rows: 2
     Button:
         text: "A"
-        size_hint: None,.1
-        width: "60dp"
+        size_hint: None,.1 # width of the button is none and height is 10% of window
+        width: "60dp" # width set to a constant amount, 60dp
     BoxLayoutExample:
-        
+
     Button:
         text: "C"
     Button:
-        text: "D"  
-        size_hint: None,.1  
+        text: "D"
+        size_hint: None,.1
         width: "60dp"
     Button:
         text: "E"
     Button:
-        text: "F"   
+        text: "F"
 
 <AnchorLayoutExample>:
     # right, left, center
-    anchor_x:"center"
+    anchor_x:"center" # enter the strings above to move the anchor on the x-axis
     # bottom, top, center
-    anchor_y:"top"
+    anchor_y:"top" # enter the strings above to move the anchor on the y-axis
     BoxLayout:
-        size_hint: .2,.2
+        size_hint: .2,.2 # creates the size of each button 20% of height and width
+        # buttons will fill into these sizes and will override the size_hint within buttons
         Button:
             text: "A"
-            size_hint: 1,1
+            size_hint: .2,1 # will cause ButtonB to increase to fill in for the missing 80%
         Button:
             text: "B"
-            size_hint: 1,1
+            size_hint: .1,1
 
 <BoxLayoutExample>:
     # orientation: "vertical"
@@ -157,7 +204,7 @@ WidgetsExample:
         Button:
             text:'B3'
         Button:
-            text:'B4'    
+            text:'B4'
 
     Label:
         text:'C'
@@ -179,4 +226,10 @@ WidgetsExample:
         text: "Try again!"
         size: "100dp", "100dp"
         pos: "3dp", "3dp"
-        color: 1,1,1,1  
+        color: 1,1,1,1
+
+
+# BUGG FIXES:
+# 1. If comment like this:
+# canvas: # comment here
+# you will receive an error, dont do this
