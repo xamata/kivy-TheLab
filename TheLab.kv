@@ -1,5 +1,5 @@
 # this code determines what page will be shown in Kivy App
-CanvasExample4:
+CanvasExample8:
 
 #: set s dp(150) # can set a variable before a class is made so it can be easily called
 <CanvasExample1>:
@@ -49,6 +49,78 @@ CanvasExample4:
         on_press: root.on_button_a_click() # if button is pressed, on_buton_a_click() is called,
         # which will probably change another variable
 
+# CanvasExample6 is a widget, not a layout, doesn't care about size of children
+<CanvasExample6>: 
+    # RelativeLayout:
+    #     canvas:
+    #         Rectangle: 
+    #     # text: "A"
+    #     pos: 100, 100
+    BoxLayout:
+        size: root.size # we use this because it is the size of the widget. a.k.a. the root
+        # create a widget within the box layout, left side
+        Widget:
+            # create a canvas within the widget to obtain canvas properties
+            canvas:
+                # change color of the whatever is inside the canvas to blue
+                Color:
+                    rgb: 0,1,0
+                # uses Color to make a blue rectangle that is the size of the canvas
+                Rectangle:
+                    size: self.size # self.size uses only the size of the widget, not the root
+        RelativeLayout:
+            canvas:
+                Color:
+                    rgb: 0,0,1
+                Rectangle:
+                    size: self.size
+                    # pos: self.pos # moves the starting point of this blue rectangle from 0,0 to 
+                    # position of where the widget is. it's not commented out bc we changes Widget
+                    # function to RelativeLayout, wow
+        # Button:
+        #     text: "A"
+
+<CanvasExample7>:
+    BoxLayout:
+        size: root.size
+        Widget:
+            canvas:
+                Color:
+                    rgb: 0,0,1
+                Rectangle:
+                    size: self.size
+        RelativeLayout:
+            canvas:
+                Color:
+                    rgb: 1,1,1
+                Rectangle:
+                    size: self.size
+        RelativeLayout:
+            canvas:
+                Color:
+                    rgb: 1,0,0
+                Rectangle:
+                    size: self.size
+
+<CanvasExample8>:
+    Widget:
+        canvas:
+            Color:
+                rgb: 0,0,1
+            Rectangle:
+                size: self.size
+    RelativeLayout:
+        canvas:
+            Color:
+                rgb: 1,1,1
+            Rectangle:
+                size: self.size
+    RelativeLayout:
+        canvas:
+            Color:
+                rgb: 1,0,0
+            Rectangle:
+                size: self.size
 
 <ImagesExample@GridLayout>:
     cols:3
