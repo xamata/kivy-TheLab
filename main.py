@@ -159,6 +159,7 @@ class CanvasExample5(Widget):
             y = self.height-self.ball_size
             # minus the size of the ball. this way, the ball is always inbounds
             self.vy = -self.vy  # changes direction of ball vertically
+
         # create a barrier on the right of the window so that the ball will stay inbounds:
         # check if the ball size + x pos of ball is greater than total width of window,
         # i.e. once the ball reaches the right side of the window
@@ -167,7 +168,7 @@ class CanvasExample5(Widget):
             x = self.width-self.ball_size
             self.vx = -self.vx
         # do this for the left and bottom of the window:
-        if y < 0:
+        if y < 0:  # y i the position of the ball and if it's lower then flip velocity direction
             y = 0
             self.vy = -self.vy
         if x < 0:
@@ -175,6 +176,18 @@ class CanvasExample5(Widget):
             self.vx = -self.vx
 
         self.ball.pos = (x, y)
+
+
+class CanvasExample6(Widget):
+    pass
+
+
+class CanvasExample7(Widget):
+    pass
+
+
+class CanvasExample8(BoxLayout):
+    pass
 
 
 TheLabApp().run()
